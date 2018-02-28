@@ -6,7 +6,13 @@ buildscript {
 //        google()
         jcenter()
         maven {
+            url "https://maven.google.com"
+        }
+        maven {
             url uri('../repo')
+        }
+        flatDir {
+            dirs 'aars'
         }
     }
     dependencies {
@@ -23,6 +29,12 @@ allprojects {
     repositories {
 //        google()
         jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
+        flatDir {
+            dirs 'aars'
+        }
     }
 }
 
