@@ -16,6 +16,8 @@ class PrepareDependenciesHooker extends GradleTaskHooker<PrepareDependenciesTask
     def hostDependencies = [] as Set
     def stripDependencies = [] as Collection<Dependency>
     def stripAarDependencies = [] as Set
+    def retainedAarLibs = [] as Set<AndroidDependency>
+
 
     PrepareDependenciesHooker(Project project, ApkVariant apkVariant) {
         super(project, apkVariant)
@@ -68,6 +70,8 @@ class PrepareDependenciesHooker extends GradleTaskHooker<PrepareDependenciesTask
             if (hostDependencies.contains(aarDependencyKey)) {
                 stripDependencies.add(it)
                 stripAarDependencies.add(aarDependencyKey + ":${mavenCoordinates.version}")
+            } else {
+                retainedAarLibs.add(it)
             }
         }
 
@@ -88,6 +92,7 @@ class PrepareDependenciesHooker extends GradleTaskHooker<PrepareDependenciesTask
 
         extension.stripDependencies = stripDependencies
         extension.stripAarDependencies = stripAarDependencies
+        extension.retainedAarLibs = retainedAarLibs
         if (showLog) {
             println "stripDependencies: " + extension.stripDependencies
         }

@@ -5,6 +5,7 @@ import com.android.build.gradle.AppExtension
 import com.android.build.gradle.api.ApkVariant
 import com.android.build.gradle.tasks.ProcessAndroidResources
 import com.google.common.io.Files
+import com.lya.gradle.collector.ResourceCollector
 import org.gradle.api.Project
 /**
  * Filter the host resources out of the plugin apk.
@@ -16,7 +17,7 @@ class ProcessResourcesHooker extends GradleTaskHooker<ProcessAndroidResources> {
     /**
      * Collector to gather the sources and styleables
      */
-//    ResourceCollector resourceCollector
+    ResourceCollector resourceCollector
     /**
      * Android config information specified in build.gradle
      */
@@ -62,9 +63,9 @@ class ProcessResourcesHooker extends GradleTaskHooker<ProcessAndroidResources> {
             include 'resources.arsc'
             include 'res/**/*'
         }
-//
-//        resourceCollector = new ResourceCollector(project, par)
-//        resourceCollector.collect()
+
+        resourceCollector = new ResourceCollector(project, par)
+        resourceCollector.collect()
 //
 //        def retainedTypes = convertResourcesForAapt(resourceCollector.pluginResources)
 //        def retainedStylealbes = convertStyleablesForAapt(resourceCollector.pluginStyleables)

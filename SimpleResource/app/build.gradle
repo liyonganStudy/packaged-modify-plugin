@@ -31,12 +31,12 @@ dependencies {
     fileTree(dir: 'aars', include: '**/*.aar').each { File file ->
         dependencies.add("compile", [name: file.name.lastIndexOf('.').with { it != -1 ? file.name[0..<it] : file.name }, ext: 'aar'])
     }//fresco 0.11.0
-    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:appcompat-v7:24.2.1'
 }
 
 packageIdModifier {
     packageId = 0x6f
     excludes = [
-            ":md-dialog-release"
+            ":md-dialog-debug"
     ]
 }

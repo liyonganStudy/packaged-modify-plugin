@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Simple Resource</string>
+    <string name="special_string">special_string</string>
 </resources>
