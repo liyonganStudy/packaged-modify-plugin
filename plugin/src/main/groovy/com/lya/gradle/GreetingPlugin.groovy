@@ -53,7 +53,10 @@ class GreetingPlugin implements Plugin<Project> {
                         }
                     })
                 }
-
+                packageIdModifier.with {
+                    packageName = variant.applicationId
+                    packagePath = packageName.replaceAll('\\.', File.separator)
+                }
                 checkConfig()
             }
         }
@@ -63,6 +66,7 @@ class GreetingPlugin implements Plugin<Project> {
 
     private void checkConfig() {
         int packageId = packageIdModifier.packageId
+
         if (packageId == 0) {
             def err = new StringBuilder('you should set the packageId in build.gradle,\n ')
             err.append('please declare it in application project build.gradle:\n')

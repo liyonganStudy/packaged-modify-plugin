@@ -26,4 +26,11 @@ class Extension {
      * All styleables this library can access, like "aarResources"
      */
     List<StyleableEntry> aarStyleables = Lists.newArrayList()
+    /** Variant application id */
+    String packageName
+
+    /** Package path for java classes */
+    String packagePath
+    /** File of split R.java */
+    File splitRJavaFile
 }

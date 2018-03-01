@@ -21,6 +21,7 @@ class PrepareDependenciesHooker extends GradleTaskHooker<PrepareDependenciesTask
 
     PrepareDependenciesHooker(Project project, ApkVariant apkVariant) {
         super(project, apkVariant)
+        showLog = true
     }
 
     @Override

@@ -37,6 +37,8 @@ dependencies {
 packageIdModifier {
     packageId = 0x6f
     excludes = [
-            ":md-dialog-debug"
+            ":md-dialog-debug",
+            "com.android.support:appcompat-v7",
+            "com.android.support:support-fragment"
     ]
 }
