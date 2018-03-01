@@ -29,12 +29,8 @@ class TaskHookerManager {
                 registerTaskHooker(new PrepareDependenciesHooker(project, appVariant))
                 registerTaskHooker(new ProcessResourcesHooker(project, appVariant))
                 registerTaskHooker(new MergeResourceTaskHook(project, appVariant))
-//                registerTaskHooker(instantiator.newInstance(MergeAssetsHooker, project, appVariant))
-//                registerTaskHooker(instantiator.newInstance(MergeManifestsHooker, project, appVariant))
-//                registerTaskHooker(instantiator.newInstance(MergeJniLibsHooker, project, appVariant))
-//                registerTaskHooker(instantiator.newInstance(ProcessResourcesHooker, project, appVariant))
-//                registerTaskHooker(instantiator.newInstance(ProguardHooker, project, appVariant))
-//                registerTaskHooker(instantiator.newInstance(DxTaskHooker, project, appVariant))
+                registerTaskHooker(new DxTaskHooker(project, appVariant))
+                registerTaskHooker(new MergeAssetsHooker(project, appVariant))
             }
         }
     }
