@@ -17,7 +17,7 @@ import org.gradle.api.Project
  */
 class ResourceCollector {
 
-    private boolean showLog = true
+    private boolean showLog = false
     private Project project
     private Extension extension
 

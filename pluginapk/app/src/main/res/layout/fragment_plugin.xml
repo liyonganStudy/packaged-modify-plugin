@@ -2,11 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/textview1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="I am fragment is plugin apk" />
+        android:layout_height="50dp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="@string/textdescrip" />
 
+    <!--<com.netease.cloudmusic.pluginapk.PluginCustomView-->
+        <!--app:pluginBgColor="#ff0000"-->
+        <!--android:layout_width="300dp"-->
+        <!--android:layout_height="300dp" />-->
+
+    <com.netease.cloudmusic.commonlibrary.CommonLibraryCustomView
+        app:bgColor="#ff0000"
+        android:layout_width="300dp"
+        android:layout_height="300dp" />
 </LinearLayout>

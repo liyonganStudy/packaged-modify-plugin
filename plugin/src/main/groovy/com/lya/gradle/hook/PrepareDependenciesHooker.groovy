@@ -21,7 +21,6 @@ class PrepareDependenciesHooker extends GradleTaskHooker<PrepareDependenciesTask
 
     PrepareDependenciesHooker(Project project, ApkVariant apkVariant) {
         super(project, apkVariant)
-        showLog = true
     }
 
     @Override
@@ -68,7 +67,12 @@ class PrepareDependenciesHooker extends GradleTaskHooker<PrepareDependenciesTask
 
             def mavenCoordinates = it.coordinates
             def aarDependencyKey = "${mavenCoordinates.groupId}:${mavenCoordinates.artifactId}"
-            if (hostDependencies.contains(aarDependencyKey)) {
+            // todo
+            boolean isAndroid = mavenCoordinates.groupId.startsWith("com.android")
+            if (isAndroid || hostDependencies.contains(aarDependencyKey)) {
+
+                hostDependencies.add(aarDependencyKey)
+
                 stripDependencies.add(it)
                 stripAarDependencies.add(aarDependencyKey + ":${mavenCoordinates.version}")
             } else {
@@ -84,9 +88,10 @@ class PrepareDependenciesHooker extends GradleTaskHooker<PrepareDependenciesTask
                 println "coordinates: " + it.getCoordinates()
                 println "projectPath: " + it.getProjectPath()
             }
-
+            // todo
             def mavenCoordinates = it.coordinates
-            if (hostDependencies.contains("${mavenCoordinates.groupId}:${mavenCoordinates.artifactId}")) {
+            boolean isAndroid = mavenCoordinates.groupId.startsWith("com.android")
+            if (isAndroid || hostDependencies.contains("${mavenCoordinates.groupId}:${mavenCoordinates.artifactId}")) {
                 stripDependencies.add(it)
             }
         }

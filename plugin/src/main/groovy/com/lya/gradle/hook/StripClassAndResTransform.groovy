@@ -13,7 +13,7 @@ import org.gradle.api.Project
  */
 class StripClassAndResTransform extends Transform {
 
-    private boolean showLog = false
+    private boolean showLog = true
     private Project project
     private Extension extension
     private HostClassAndResCollector classAndResCollector
@@ -53,7 +53,9 @@ class StripClassAndResTransform extends Transform {
         def stripEntries = classAndResCollector.collect(extension.stripDependencies)
         if (showLog) {
             stripEntries.each {
-                println 'classAndResCollector stripEntries: ' + it
+                if (it.toString().contains("android.support.v4.app.Fragment") || it.toString().contains("android.view.LayoutInflater")) {
+                    println '=================classAndResCollector stripEntries: ' + it
+                }
             }
         }
 
@@ -65,7 +67,7 @@ class StripClassAndResTransform extends Transform {
 
             it.directoryInputs.each { directoryInput ->
                 if (showLog) {
-                    println "transformInvocation.directoryInput: " + directoryInput
+//                    println "transformInvocation.directoryInput: " + directoryInput
                 }
                 directoryInput.file.traverse(type: FileType.FILES) {
                     def entryName = it.path.substring(directoryInput.file.path.length() + 1)
@@ -73,13 +75,13 @@ class StripClassAndResTransform extends Transform {
                     def dest = transformInvocation.outputProvider.getContentLocation(
                             destName, directoryInput.contentTypes, directoryInput.scopes, Format.DIRECTORY)
                     if (!stripEntries.contains(entryName)) {
-//                        if (showLog) {
-//                            println '========copy directory not in stripEntries'
-//                        }
+                        if (showLog) {
+                            println '========copy directory not in stripEntries' + entryName
+                        }
                         FileUtils.copyFile(it, dest)
                     } else {
                         if (showLog) {
-                            println '========do not copy directory in stripEntries: ' + entryName
+//                            println '========do not copy directory in stripEntries: ' + entryName
                         }
                     }
                 }
@@ -87,19 +89,19 @@ class StripClassAndResTransform extends Transform {
 
             it.jarInputs.each { jarInput ->
                 if (showLog) {
-                    println "transformInvocation.jarInput: " + jarInput
+//                    println "transformInvocation.jarInput: " + jarInput
                 }
                 Set<String> jarEntries = HostClassAndResCollector.unzipJar(jarInput.file)
                 if (!stripEntries.containsAll(jarEntries)){
                     def dest = transformInvocation.outputProvider.getContentLocation(jarInput.name,
                             jarInput.contentTypes, jarInput.scopes, Format.JAR)
                     FileUtils.copyFile(jarInput.file, dest)
-//                    if (showLog) {
-//                        println '========copy jar not in stripEntries'
-//                    }
+                    if (showLog) {
+                        println '========copy jar not in stripEntries' + jarEntries
+                    }
                 } else {
                     if (showLog) {
-                        println '========do not copy jar in stripEntries: ' + jarEntries
+//                        println '========do not copy jar in stripEntries: ' + jarEntries
                     }
                 }
             }

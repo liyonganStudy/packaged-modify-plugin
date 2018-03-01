@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         apkPath = file.getAbsolutePath();
         ResourcesManager.createResources(this, apkPath);
         PackageInfo packageInfo = getPackageManager().getPackageArchiveInfo(apkPath, PackageManager.GET_ACTIVITIES | PackageManager.GET_META_DATA);
-        Fragment fragment = getFragmentFromApk(createDexClassLoader(MainActivity.this, apkPath), packageInfo.packageName + ".LyricTemplateFragment");
+        Fragment fragment = getFragmentFromApk(createDexClassLoader(MainActivity.this, apkPath), packageInfo.packageName + ".PluginFragment");
         if (fragment == null) {
             Toast.makeText(this, "can not load plugin fragment", Toast.LENGTH_LONG).show();
             return;
@@ -50,6 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static DexClassLoader createDexClassLoader(Context context, String apkPath) {
         File dexOutputDir = context.getDir(DEX_OUTPUT_DIR, Context.MODE_PRIVATE);
-        return new DexClassLoader(apkPath, dexOutputDir.getAbsolutePath(), null, context.getClassLoader());
+        return new PluginDexClassLoader(apkPath, dexOutputDir.getAbsolutePath(), null, context.getClassLoader());
     }
 }

@@ -1,2 +1,3 @@
-./gradlew clean aP --stacktrace
+
+./gradlew  aP --stacktrace
 

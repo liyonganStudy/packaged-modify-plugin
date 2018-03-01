@@ -4,6 +4,7 @@ apply plugin: 'com.lya.firstplugin'
 packageIdModifier {
     packageId = 0x6f
     excludes = [
+            ":commonlibrary-debug",
             "com.android.support:appcompat-v7",
             "com.android.support:support-fragment"
     ]
@@ -30,6 +31,8 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-//    compile project(path: ':commonlibrary')
     compile 'com.android.support:appcompat-v7:24.2.1'
+    fileTree(dir: 'aars', include: '**/*.aar').each { File file ->
+        dependencies.add("compile", [name: file.name.lastIndexOf('.').with { it != -1 ? file.name[0..<it] : file.name }, ext: 'aar'])
+    }
 }

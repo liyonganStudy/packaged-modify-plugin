@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CommonLibraryCustomView">
+        <attr name="bgColor" format="color|reference" />
+        <attr name="bgDescrip" format="string" />
+    </declare-styleable>
+</resources>
