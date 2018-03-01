@@ -40,4 +40,8 @@ public class PluginDexClassLoader extends DexClassLoader {
         }
         return null;
     }
+
+    public Class<?> loadPluginClass(String name) throws ClassNotFoundException {
+        return super.loadClass(name);
+    }
 }

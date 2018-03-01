@@ -14,7 +14,6 @@
         android:text="@string/textdescrip" />
 
     <!--<com.netease.cloudmusic.pluginapk.PluginCustomView-->
-        <!--app:pluginBgColor="#ff0000"-->
         <!--android:layout_width="300dp"-->
         <!--android:layout_height="300dp" />-->
 
@@ -22,4 +21,7 @@
         app:bgColor="#ff0000"
         android:layout_width="300dp"
         android:layout_height="300dp" />
+
+    <include layout="@layout/include_text_item"/>
+
 </LinearLayout>
