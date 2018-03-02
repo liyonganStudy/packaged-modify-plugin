@@ -1,4 +1,4 @@
-package com.netease.cloudmusic.commonlibrary;
+package com.netease.cloudmusic.hostapp;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,17 +13,16 @@ import android.widget.ImageView;
  * Created by hzliyongan on 2018/3/1.
  */
 
-public class CommonLibraryCustomView extends ImageView {
-    private static final String TAG = "CommonLibraryCustomView";
+public class HostCustomView extends ImageView {
+    private static final String TAG = "HostCustomView";
     private int bgColor;
 
-    public CommonLibraryCustomView(Context context) {
+    public HostCustomView(Context context) {
         super(context);
     }
 
-    public CommonLibraryCustomView(Context context, @Nullable AttributeSet attrs) {
+    public HostCustomView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CommonLibraryCustomView, 0, 0);
 
         int count = attrs.getAttributeCount();
         for (int i = 0; i < count; i++) {
@@ -31,13 +30,14 @@ public class CommonLibraryCustomView extends ImageView {
             String attrVal = attrs.getAttributeValue(i);
             Log.e(TAG, "attrName = " + attrName + " , attrVal = " + attrVal);
 
-            Log.d(TAG, "attrId: " + Integer.toHexString(attrs.getAttributeNameResource(i)));
+            Log.e(TAG, "attrId: " + Integer.toHexString(attrs.getAttributeNameResource(i)));
         }
 
-        bgColor = a.getColor(R.styleable.CommonLibraryCustomView_bgColor, Color.BLUE);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HostCustomView, 0, 0);
+        bgColor = a.getColor(R.styleable.HostCustomView_hostBgColor, Color.BLUE);
 
-        for (int i : R.styleable.CommonLibraryCustomView) {
-            Log.i(TAG, "CommonLibraryCustomView: " + Integer.toHexString(i));
+        for (int i : R.styleable.HostCustomView) {
+            Log.i(TAG, "HostCustomView: " + Integer.toHexString(i));
         }
 
         a.recycle();

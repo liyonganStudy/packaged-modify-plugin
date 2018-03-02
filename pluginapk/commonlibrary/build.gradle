@@ -1,4 +1,10 @@
-apply plugin: 'com.android.library'
+def isLib = false
+if (isLib) {
+    apply plugin: 'com.android.library'
+} else {
+    apply plugin: 'com.android.application'
+    apply from: 'publicxml.gradle'
+}
 
 android {
     compileSdkVersion 24

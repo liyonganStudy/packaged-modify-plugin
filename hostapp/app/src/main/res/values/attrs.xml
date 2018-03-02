@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HostCustomView">
+        <attr name="hostBgColor" format="color|reference" />
+        <attr name="hostBgDescrip" format="string" />
+    </declare-styleable>
+</resources>
