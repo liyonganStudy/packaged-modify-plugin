@@ -43,28 +43,27 @@ public class MainActivity extends AppCompatActivity {
         super.attachBaseContext(newBase);
 
         ResourcesManager.createResources(this, apkPath);
-//        ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).cloneInContext(this).setFactory(new LayoutInflater.Factory() {
-//            @Override
-//            public View onCreateView(String name, Context context, AttributeSet attrs) {
-//                try {
-//                    Class<?> cl = getPluginDexClassLoader().loadPluginClass(name);
-//                    Constructor<?> constructor = cl.getConstructor(Context.class, AttributeSet.class);
-//                    return ((View) constructor.newInstance(context, attrs));
-//                } catch (ClassNotFoundException e) {
-//                    e.printStackTrace();
-//                } catch (NoSuchMethodException e) {
-//                    e.printStackTrace();
-//                    return null;
-//                } catch (IllegalAccessException e) {
-//                    e.printStackTrace();
-//                } catch (InstantiationException e) {
-//                    e.printStackTrace();
-//                } catch (InvocationTargetException e) {
-//                    e.printStackTrace();
-//                }
-//                return null;
-//            }
-//        });
+        ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).setFactory(new LayoutInflater.Factory() {
+            @Override
+            public View onCreateView(String name, Context context, AttributeSet attrs) {
+                try {
+                    Class<?> cl = getPluginDexClassLoader().loadPluginClass(name);
+                    Constructor<?> constructor = cl.getConstructor(Context.class, AttributeSet.class);
+                    return ((View) constructor.newInstance(context, attrs));
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        });
     }
 
     private Fragment getFragmentFromApk(DexClassLoader classLoader, String fragmentFullName) {

@@ -13,9 +13,9 @@
         android:gravity="center"
         android:text="@string/textdescrip" />
 
-    <!--<com.netease.cloudmusic.pluginapk.PluginCustomView-->
-        <!--android:layout_width="300dp"-->
-        <!--android:layout_height="300dp" />-->
+    <com.netease.cloudmusic.pluginapk.PluginCustomView
+        android:layout_width="300dp"
+        android:layout_height="300dp" />
 
     <com.netease.cloudmusic.commonlibrary.CommonLibraryCustomView
         app:bgColor="#ff0000"
