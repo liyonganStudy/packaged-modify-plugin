@@ -13,7 +13,7 @@ import org.gradle.api.Project
  * The entire stripped operation throughout the build lifecycle is based on the result of this hooker。
  */
 class PrepareDependenciesHooker extends GradleTaskHooker<PrepareDependenciesTask> {
-    def hostDependencies = [] as Set
+    def commonLibDependencies = [] as Set
     def stripDependencies = [] as Collection<Dependency>
     def stripAarDependencies = [] as Set
     def retainedAarLibs = [] as Set<AndroidDependency>
@@ -39,9 +39,17 @@ class PrepareDependenciesHooker extends GradleTaskHooker<PrepareDependenciesTask
             println "extension.excludes: " + extension.excludes.toString()
         }
 
+        File commonLibs = new File(project.rootDir, "versions.txt")
+        if (commonLibs.exists()) {
+            commonLibs.splitEachLine('\\s+', { columns ->
+                final def module = columns[0].split(':')
+                commonLibDependencies.add("${module[0]}:${module[1]}")
+            })
+        }
+
         extension.excludes.each { String artifact ->
             final def module = artifact.split(':')
-            hostDependencies.add("${module[0]}:${module[1]}")
+            commonLibDependencies.add("${module[0]}:${module[1]}")
         }
     }
 
@@ -67,12 +75,8 @@ class PrepareDependenciesHooker extends GradleTaskHooker<PrepareDependenciesTask
 
             def mavenCoordinates = it.coordinates
             def aarDependencyKey = "${mavenCoordinates.groupId}:${mavenCoordinates.artifactId}"
-            // todo
-            boolean isAndroid = mavenCoordinates.groupId.startsWith("com.android")
-            if (isAndroid || hostDependencies.contains(aarDependencyKey)) {
-
-                hostDependencies.add(aarDependencyKey)
-
+            if (commonLibDependencies.contains(aarDependencyKey)) {
+                commonLibDependencies.add(aarDependencyKey)
                 stripDependencies.add(it)
                 stripAarDependencies.add(aarDependencyKey + ":${mavenCoordinates.version}")
             } else {
@@ -88,10 +92,8 @@ class PrepareDependenciesHooker extends GradleTaskHooker<PrepareDependenciesTask
                 println "coordinates: " + it.getCoordinates()
                 println "projectPath: " + it.getProjectPath()
             }
-            // todo
             def mavenCoordinates = it.coordinates
-            boolean isAndroid = mavenCoordinates.groupId.startsWith("com.android")
-            if (isAndroid || hostDependencies.contains("${mavenCoordinates.groupId}:${mavenCoordinates.artifactId}")) {
+            if (commonLibDependencies.contains("${mavenCoordinates.groupId}:${mavenCoordinates.artifactId}")) {
                 stripDependencies.add(it)
             }
         }

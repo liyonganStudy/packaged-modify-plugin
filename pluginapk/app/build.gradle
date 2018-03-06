@@ -5,8 +5,6 @@ packageIdModifier {
     packageId = 0x6f
     excludes = [
             ":commonlibrary-debug",
-            "com.android.support:appcompat-v7",
-            "com.android.support:support-fragment"
     ]
 }
 

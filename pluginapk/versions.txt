@@ -1,0 +1,10 @@
+com.android.support:animated-vector-drawable:24.2.1 11546
+com.android.support:appcompat-v7:24.2.1 964437
+com.android.support:support-annotations:24.2.1 21786
+com.android.support:support-compat:24.2.1 608626
+com.android.support:support-core-ui:24.2.1 241502
+com.android.support:support-core-utils:24.2.1 92459
+com.android.support:support-fragment:24.2.1 138564
+com.android.support:support-media-compat:24.2.1 249163
+com.android.support:support-v4:24.2.1 1728
+com.android.support:support-vector-drawable:24.2.1 38400

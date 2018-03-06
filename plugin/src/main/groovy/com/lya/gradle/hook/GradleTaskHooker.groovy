@@ -11,8 +11,6 @@ abstract class GradleTaskHooker<T extends Task> {
     private ApkVariant apkVariant
     private Extension extension
 
-    private TaskHookerManager taskHookerManager
-
     GradleTaskHooker(Project project, ApkVariant apkVariant) {
         this.project = project
         this.apkVariant = apkVariant
@@ -23,7 +21,6 @@ abstract class GradleTaskHooker<T extends Task> {
         return this.project
     }
 
-
     ApkVariant getApkVariant() {
         return this.apkVariant
     }
@@ -31,16 +28,6 @@ abstract class GradleTaskHooker<T extends Task> {
     Extension getExtension() {
         return this.extension
     }
-
-    void setTaskHookerManager(TaskHookerManager taskHookerManager) {
-        this.taskHookerManager = taskHookerManager
-    }
-
-    TaskHookerManager getTaskHookerManager() {
-        return this.taskHookerManager
-    }
-
-    T getTask() {}
 
     abstract String getTaskName()
 

@@ -1,5 +1,6 @@
 package com.lya.gradle
 
+import com.android.build.gradle.AppExtension
 import com.android.build.gradle.api.ApkVariant
 import com.android.build.gradle.internal.TaskContainerAdaptor
 import com.android.build.gradle.internal.TaskFactory
@@ -13,33 +14,35 @@ import org.gradle.api.Task
 
 class GreetingPlugin implements Plugin<Project> {
 
-    protected Project project
-    protected TaskFactory taskFactory
-    protected boolean isBuildingPlugin = false
+    private Project project
 
-    void apply(Project project) {
-        this.project = project
+    void apply(Project p) {
+        project = p
 
-        def startParameter = project.gradle.startParameter
-        def targetTasks = startParameter.taskNames
-
+        def isBuildingPlugin = false
+        def targetTasks = project.gradle.startParameter.taskNames
         targetTasks.each {
             if (it.contains("assemblePlugin") || it.contains("aP")) {
                 isBuildingPlugin = true
             }
         }
-
         project.extensions.create('packageIdModifier', Extension)
 
+        if (!isBuildingPlugin) {
+            return
+        } else {
+            project.task('assemblePlugin', dependsOn: "assembleDebug", group: 'build', description: 'Build plugin apk')
+        }
+
+        // AppPlugin.createExtension中创建了AppExtension
         project.android.registerTransform(new StripClassAndResTransform(project))
 
         TaskHookerManager taskHookerManager = new TaskHookerManager(project)
         taskHookerManager.registerTaskHookers()
 
-        taskFactory = new TaskContainerAdaptor(project.tasks)
+        TaskFactory taskFactory = new TaskContainerAdaptor(project.tasks)
         project.afterEvaluate {
             project.android.applicationVariants.each { ApkVariant variant ->
-
                 if (variant.buildType.name.equalsIgnoreCase("debug")) {
                     final def variantPluginTaskName = "assemblePlugin${variant.name.capitalize()}"
                     final def configAction = new AssemblePlugin.ConfigAction(project, variant)
@@ -53,6 +56,7 @@ class GreetingPlugin implements Plugin<Project> {
                         }
                     })
                 }
+
                 packageIdModifier.with {
                     packageName = variant.applicationId
                     packagePath = packageName.replaceAll('\\.', File.separator)
@@ -60,8 +64,6 @@ class GreetingPlugin implements Plugin<Project> {
                 checkConfig()
             }
         }
-
-        project.task('assemblePlugin', dependsOn: "assembleDebug", group: 'build', description: 'Build plugin apk')
     }
 
     private void checkConfig() {
@@ -91,6 +93,5 @@ class GreetingPlugin implements Plugin<Project> {
     private Extension getPackageIdModifier() {
         return project.packageIdModifier
     }
-
 
 }

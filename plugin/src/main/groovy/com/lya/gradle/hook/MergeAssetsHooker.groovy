@@ -38,6 +38,13 @@ class MergeAssetsHooker extends GradleTaskHooker<MergeSourceSetFolders> {
             return ''
         }
 
+        if (showLog) {
+            println "===============stripedAssetPaths"
+            stripedAssetPaths.each {
+                println "path: " + it
+            }
+        }
+
         List<AssetSet> assetSets = task.inputDirectorySets
         assetSets.removeIf(new Predicate<AssetSet>() {
             @Override

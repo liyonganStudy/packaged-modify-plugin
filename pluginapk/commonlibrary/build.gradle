@@ -6,6 +6,9 @@ if (isLib) {
     apply from: 'publicxml.gradle'
 }
 
+apply plugin: 'com.lya.firstplugin.host'
+
+
 android {
     compileSdkVersion 24
     buildToolsVersion '25.0.0'
